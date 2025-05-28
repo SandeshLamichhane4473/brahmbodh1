@@ -2,18 +2,32 @@ import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { FaTachometerAlt, FaUsers, FaBlog, FaCog, FaBars } from 'react-icons/fa';
 import { useAdminTitle } from './AdminTitleContext';
-
+import { FaSignOutAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-   
+   const { logout } = useAuth();
+    const navigate = useNavigate();
+   //logout 
+ const handleLogout = () => {
+  logout();
+  navigate('/admin/login');
+  setMobileOpen(false); // Close sidebar on mobile
+};
+   /////////
+
 
   const navItemStyle = ({ isActive }) =>
     `flex items-center space-x-2 px-3 py-2 rounded hover:bg-gray-700 transition ${
       isActive ? 'bg-gray-700 text-white font-semibold' : 'text-gray-300'
     }`;
   const { title } = useAdminTitle();
+
+
+  
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Topbar (mobile only) */}
@@ -99,6 +113,16 @@ const AdminLayout = () => {
             <FaCog />
             {!collapsed && <span>Settings</span>}
           </NavLink>
+
+            <hr className="my-2 border-gray-600" />
+            <button
+              onClick={handleLogout}
+              className="flex items-center space-x-2 px-3 py-2 rounded text-red-300 hover:bg-red-700 hover:text-white transition"
+            >
+              <FaSignOutAlt />
+              {!collapsed && <span>Logout</span>}
+            </button>
+
         </nav>
       </aside>
 

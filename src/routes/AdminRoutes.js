@@ -7,15 +7,29 @@ import Users from '../pages/admin/Users'; // ✅ Import Users
 import Blogs from '../pages/admin/Blogs';
 import Settings from '../pages/admin/Settings';
 import { AdminTitleProvider } from '../layouts/AdminTitleContext'; // ✅ Import the context
+import PrivateRoute from './PrivateRoute';
+
 
 const AdminRoutes = () => {
   return (
     <Routes>
-       <Route path="/admin"  element={
-          <AdminTitleProvider>
-            <AdminLayout />
-          </AdminTitleProvider>
-        }>
+     
+
+
+
+              <Route
+        path="/admin"
+        element={
+          <PrivateRoute>
+            <AdminTitleProvider>
+              <AdminLayout />
+            </AdminTitleProvider>
+          </PrivateRoute>
+        }
+      >
+
+
+     
         <Route index element={<Dashboard />} />
         <Route path="users" element={<Users />} />
         <Route path="blogs" element={<Blogs />} />     
