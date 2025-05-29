@@ -17,9 +17,9 @@ const AdminLogin = () => {
       login(userData);
      
     if (userData.role === 'admin') {
-      navigate('/admin');
+      navigate('/admin/');
     } else {
-      navigate('/'); // Redirect to main page for non-admin users
+      navigate('/admin/'); // Redirect to main page for non-admin users
     }
       
     } else {

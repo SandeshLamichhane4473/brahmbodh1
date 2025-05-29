@@ -1,63 +1,241 @@
-import React from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
-
+import React, { useState } from 'react';
+import { Outlet, NavLink, useLocation , useNavigate} from 'react-router-dom';
+import { FaChevronDown,FaUserCircle, FaBars, FaTimes } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext';
 const navLinks = [
-   { to: '/home', label: 'Home' },
+  { to: '/home', label: 'Home' },
   { to: '/blog', label: 'Blog' },
-  { to: '/faq', label: 'FAQ' },
-  { to: '/yoga', label: 'Yoga' },
-  { to: '/vedant', label: 'Vedant' },
+  { to: '/courses', label: 'Courses' },
   { to: '/about', label: 'About Us' },
 ];
 
+const courseList = [
+  { to: '/courses/web-development', label: 'Web Development' },
+  { to: '/courses/data-science', label: 'Data Science' },
+  { to: '/courses/ai', label: 'Artificial Intelligence' },
+];
+
+const navLinkClass = ({ isActive }) =>
+  isActive ? 'text-yellow-300 font-semibold underline' : 'text-white hover:text-yellow-200';
+
 const HomeLayout = () => {
+  const [showCourses, setShowCourses] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const { user, logout } = useAuth(); // Now you can use user.name
+ const [showUserMenu, setShowUserMenu] = useState(false);
+  //for the login and logout
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleLogin = () => {
+    navigate('/user/login');
+  };
+
+const handleLogout = () => setIsLoggedIn(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+    setShowCourses(false); // Close dropdown in mobile
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header / Navbar */}
-      <header className="bg-primary text-white shadow px-6 py-4 flex justify-between items-center">
-        <div className="font-bold text-xl">YourLogo</div>
-        <nav className="space-x-4">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) =>
-                isActive ? 'text-yellow-300 font-semibold' : 'text-white hover:text-yellow-200'
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
+    <div className="min-h-screen flex flex-col relative">
+      {/* Header */}
+      <header className="bg-primary text-white shadow-lg px-6 py-4 flex justify-between items-center relative z-50">
+        <div className="font-bold text-xl">ब्रह्म-बोध</div>
+
+        {/* Hamburger Icon (Mobile) */}
+        <button
+          onClick={toggleMobileMenu}
+          className="md:hidden text-white text-2xl focus:outline-none"
+        >
+          {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+
+        {/* Desktop Nav */}
+        <nav className="space-x-4 items-center hidden md:flex relative">
+          {navLinks.map((link) =>
+            link.label === 'Courses' ? (
+              <div key={link.to} className="relative inline-block">
+                <button
+                  type="button"
+                  onClick={() => setShowCourses((prev) => !prev)}
+                  className="flex items-center space-x-1 text-white hover:text-yellow-200 focus:outline-none"
+                >
+                  <span>{link.label}</span>
+                  <FaChevronDown
+                    className={`transition-transform duration-300 ${showCourses ? 'rotate-180' : ''}`}
+                    size={12}
+                  />
+                </button>
+                {showCourses && (
+                  <div className="absolute top-full left-0 mt-2 w-48 bg-white text-black shadow-lg rounded-md z-50">
+                    {courseList.map((course) => (
+                      <NavLink
+                        key={course.to}
+                        to={course.to}
+                        className="block px-4 py-2 hover:bg-gray-100"
+                        onClick={() => setShowCourses(false)}
+                      >
+                        {course.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <NavLink key={link.to} to={link.to} className={navLinkClass}>
+                {link.label}
+              </NavLink>
+            )
+          )}
+
+          {/* for the user drop down */}
+
+                        <div className="relative">
+                  <button
+                    onClick={() => setShowUserMenu((prev) => !prev)}
+                    className="flex items-center  text-white hover:text-yellow-200 focus:outline-none"
+                  >
+                    <FaUserCircle className="text-2xl" />
+                    <FaChevronDown
+                      className={`ml-1 transition-transform duration-300 ${showUserMenu ? 'rotate-180' : ''}`}
+                      size={12}
+                    />
+                  </button>
+
+                  {showUserMenu && (
+                    <div className="absolute right-0 mt-2 w-40 bg-white text-black shadow-lg rounded-md z-50">
+                      {user ? (
+                        <>
+                          <div className="px-4 py-2 border-b border-gray-200 font-semibold">{user.name}</div>
+                          
+                          <button
+                            onClick={() => {
+                              logout();
+                              setShowUserMenu(false);
+                            }}
+                            className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                          >
+                            Logout
+                          </button>
+                        </>
+                      ) : (
+                        <NavLink
+                          to="user/login"
+                          onClick={() => setShowUserMenu(false)}
+                          className="block px-4 py-2 hover:bg-gray-100"
+                        >
+                          Login
+                        </NavLink>
+                      )}
+                    </div>
+                  )}
+                </div>
         </nav>
       </header>
 
-      {/* Sidebar & Main Content */}
-      <div className="flex flex-1">
-        <aside className="w-64 bg-secondary text-white p-4 hidden md:block">
-          <h2 className="text-lg font-semibold mb-4">Categories</h2>
-          <ul className="space-y-2">
-            {navLinks.map((link) => (
-              <li key={link.to}>
-                <NavLink
-                  to={link.to}
-                  className={({ isActive }) =>
-                    isActive ? 'text-yellow-300' : 'text-white hover:text-yellow-200'
-                  }
+      {/* Mobile Nav */}
+      {isMobileMenuOpen && (
+        <nav className={`
+      md:hidden bg-primary text-white px-6 pb-4 space-y-2
+      transform transition-all duration-300 ease-in-out
+      animate-fade-slide-down
+    `}>
+          {navLinks.map((link) =>
+            link.label === 'Courses' ? (
+              <div key={link.to}>
+                <button
+                  onClick={() => setShowCourses((prev) => !prev)}
+                  className="flex items-center w-full justify-between text-left text-white hover:text-yellow-200"
                 >
-                  {link.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </aside>
+                  <span>{link.label}</span>
+                  <FaChevronDown
+                    className={`transition-transform duration-300 ${showCourses ? 'rotate-180' : ''}`}
+                    size={12}
+                  />
+                </button>
+                {showCourses && (
+                  <div className="pl-4 mt-1 space-y-1">
+                    {courseList.map((course) => (
+                      <NavLink
+                        key={course.to}
+                        to={course.to}
+                        className="block hover:text-yellow-200"
+                        onClick={toggleMobileMenu}
+                      >
+                        {course.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className="block hover:text-yellow-200"
+                onClick={toggleMobileMenu}
+              >
+                {link.label}
+              </NavLink>
+            )
+          )}
 
-        {/* Main Content */}
-        <main className="flex-1 p-6 bg-gray-50">
+       <div className="relative">
+  <button
+    onClick={() => setShowUserMenu((prev) => !prev)}
+    className="flex items-center text-yellow-300 hover:text-yellow-200 focus:outline-none"
+  >
+    <FaUserCircle className="text-2xl text-white" />
+    <FaChevronDown
+      className={`ml-1 transition-transform text-white duration-300 ${showUserMenu ? 'rotate-180' : ''}`}
+      size={12}
+    />
+  </button>
+
+  {showUserMenu && (
+    <div className="absolute right-0 mt-2 w-40 bg-white text-black shadow-lg rounded-md z-50">
+      {user ? (
+        <>
+          <div className="px-4 py-2 border-b border-gray-200 font-semibold">{user.name}</div>
+          <button
+            onClick={() => {
+              logout();
+              setShowUserMenu(false);
+            }}
+            className="w-full text-left px-4 py-2 hover:bg-gray-100"
+          >
+            Logout
+          </button>
+        </>
+      ) : (
+        <NavLink
+          to="/login"
+          onClick={() => setShowUserMenu(false)}
+          className="block px-4 py-2 hover:bg-gray-100"
+        >
+          Login
+        </NavLink>
+      )}
+    </div>
+  )}
+</div>
+
+
+
+
+        </nav>
+      )}
+
+      {/* Main Content */}
+      <div className="flex flex-1">
+        <main className="flex-1 pt-0 px-4 pb-6 bg-gray-300">
           <Outlet />
         </main>
-      </div>
-
-      {/* Footer */}
+      </div>3
       <footer className="bg-gray-800 text-white p-4 text-center">
         &copy; {new Date().getFullYear()} YourWebsite. All rights reserved.
       </footer>

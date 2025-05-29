@@ -14,11 +14,8 @@ const AdminRoutes = () => {
   return (
     <Routes>
      
-
-
-
-              <Route
-        path="/admin"
+    <Route
+        path=""
         element={
           <PrivateRoute>
             <AdminTitleProvider>

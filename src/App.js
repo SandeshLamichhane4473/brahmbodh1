@@ -21,8 +21,8 @@ function App() {
           {/* User-facing site with layout */}
           <Route path="/*" element={<UserRoutes />} />
            {/* Protected admin routes */}
-          <Route path="/*" element={<AdminRoutes />} />
-
+          <Route path="/admin/*" element={<AdminRoutes />} />
+          <Route path="*" element={<h1>Not found</h1> } />
         {/* Admin section */}
        
       </Routes>
