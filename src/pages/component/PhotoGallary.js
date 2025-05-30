@@ -18,6 +18,7 @@ const images = [
   { src: e, desc: "योग दिवस समारोह" },
   { src: d, desc: "आसन प्रदर्शन" },
   { src: e, desc: "समूह साधना" },
+  
 ];
 
 const PhotoGallery = () => {
