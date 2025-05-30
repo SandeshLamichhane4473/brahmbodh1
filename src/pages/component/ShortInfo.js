@@ -1,6 +1,6 @@
 // components/AboutText.jsx
 import logo1 from '../../assets/logo1.png'
-import myimage from '../../assets/myphoto.png'
+ 
 const ShortInfo = () => {
 
    return (

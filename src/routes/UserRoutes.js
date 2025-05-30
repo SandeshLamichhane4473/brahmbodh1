@@ -2,8 +2,6 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import HomeLayout from '../pages/user/HomeLayout';
 import Blog from '../pages/user/Blog';
-import FAQ from '../pages/user/FAQ';
-import Yoga from '../pages/user/Yoga';
  
 import About from '../pages/user/About';
 import Home from '../pages/user/Home';

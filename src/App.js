@@ -1,9 +1,8 @@
-import logo from './logo.svg';
+ 
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {Routes, Route } from 'react-router-dom';
 import AdminRoutes from './routes/AdminRoutes';
  
-import { ImOpt } from 'react-icons/im';
 import UserLogin from './pages/user/UserLogin';
 import AdminLogin from './pages/admin/AdminLogin';
 import UserRoutes from './routes/UserRoutes';

@@ -1,7 +1,7 @@
-import Carousel from "../component/Carousel";
+ 
 import ShortInfo from "../component/ShortInfo";
 import ExploreCourse from "../component/ExploreCourses";
-import logo from '../../assets/logo1.png'
+ 
 import myimage from '../../assets/myphoto.png'
 import PhotoGallery from "../component/PhotoGallary";
 import SocialLinks from "../component/SocialLinks";

@@ -23,17 +23,17 @@ const HomeLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const location = useLocation();
+  // const location = useLocation();
 
   const { user, logout } = useAuth(); // Now you can use user.name
  const [showUserMenu, setShowUserMenu] = useState(false);
   //for the login and logout
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const handleLogin = () => {
-    navigate('/user/login');
-  };
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const handleLogin = () => {
+  //   navigate('/user/login');
+  // };
 
-const handleLogout = () => setIsLoggedIn(false);
+// const handleLogout = () => setIsLoggedIn(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
