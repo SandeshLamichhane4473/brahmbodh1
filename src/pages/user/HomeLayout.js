@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, NavLink, useLocation , useNavigate} from 'react-router-dom';
+import { Outlet, NavLink} from 'react-router-dom';
 import { FaChevronDown,FaUserCircle, FaBars, FaTimes } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
 const navLinks = [
@@ -21,7 +21,7 @@ const navLinkClass = ({ isActive }) =>
 const HomeLayout = () => {
   const [showCourses, setShowCourses] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // const location = useLocation();
 
