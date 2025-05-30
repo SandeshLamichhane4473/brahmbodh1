@@ -36,14 +36,14 @@ const ExploreCourse = () => {
     <div className="p-6">
     <h3 className="text-secondary mb-3 underline">विभिन्न शीर्षकहरु पुरा पढ्नुहोस</h3>
      <hr/>
-    <div className="grid md:grid-cols-3 gap-4   bg-gray-100 rounded-xl">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-100 rounded-xl  sm:grid-cols-1 md:grid-cols-3 gap-4   bg-gray-100 rounded-xl">
        
 
       {courses.map((course, idx) => (
         <div key={idx} className="flex items-start bg-gray-100 cursor-pointer shadow-md p-4 rounded-lg space-x-4 hover:shadow-lg transition">
           <div className="text-3xl">{course.icon}</div>
           <div>
-            <h3 className="text-xl font-semibold">{course.title}</h3>
+            <h3 className="text-xl font-semibold break-words">{course.title}</h3>
             <p className="text-gray-600 text-sm mt-1">{course.subhead}</p>
           </div>
         </div>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { FaTachometerAlt, FaUsers, FaBlog, FaCog, FaBars } from 'react-icons/fa';
+import { FaTachometerAlt, FaUsers,FaBaby, FaBlog, FaCog, FaBars } from 'react-icons/fa';
 import { useAdminTitle } from './AdminTitleContext';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -94,9 +95,12 @@ const AdminLayout = () => {
             className={navItemStyle}
             onClick={() => setMobileOpen(false)}
           >
+
+         
             <FaUsers />
             {!collapsed && <span>Users</span>}
           </NavLink>
+          
           <NavLink
             to="/admin/blogs"
             className={navItemStyle}
@@ -105,8 +109,23 @@ const AdminLayout = () => {
             <FaBlog />
             {!collapsed && <span>Blogs</span>}
           </NavLink>
+
+
+         <NavLink
+            to="/admin/course"
+            className={navItemStyle}
+            onClick={() => setMobileOpen(false)}
+          >
+            <FaBaby />
+            {!collapsed && <span>Course</span>}
+          </NavLink>
+          
+
+
+
+
           <NavLink
-            to="/admin/settings"
+             to="/admin/settings"
             className={navItemStyle}
             onClick={() => setMobileOpen(false)}
           >

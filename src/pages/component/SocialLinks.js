@@ -36,7 +36,7 @@ const SocialLinks = () => {
   return (
     <div className="p-4 bg-gray-100 rounded-lg shadow-md">
       <h2 className="text-lg font-semibold mb-3">Follow us on:</h2>
-      <div className="flex flex-row space-x-4 justify-center align-center">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3   justify-center items-center">
         {socialMedia.map((media, idx) => (
             <a
             key={idx}
