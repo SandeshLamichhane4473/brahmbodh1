@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import RichTextEditor from "../component/RichTextEditor";
 const initialBlog = {
   BlogId: "",
   Header: "",
@@ -19,6 +19,8 @@ const initialBlog = {
 };
 
 const AddEditBlog = ({ blogs = [], onSave }) => {
+  const [text, setText] = useState('');
+
   const { id } = useParams();
   const navigate = useNavigate();
   const isEdit = Boolean(id);
@@ -43,7 +45,9 @@ const AddEditBlog = ({ blogs = [], onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(formData);
+     // onSave(formData);
+        console.log(text)
+    return
     navigate("/blogs");
   };
 
@@ -78,7 +82,7 @@ const AddEditBlog = ({ blogs = [], onSave }) => {
               onChange={handleChange}
               disabled={disabled}
               className="border p-2 rounded"
-              required
+               
             />
           </div>
         ))}
@@ -86,13 +90,9 @@ const AddEditBlog = ({ blogs = [], onSave }) => {
         {/* Body Field (Full Width) */}
         <div className="md:col-span-3 flex flex-col">
           <label className="font-medium mb-1">Body</label>
-          <textarea
-            name="Body"
-            value={formData.Body}
-            onChange={handleChange}
-            className="border p-2 rounded min-h-[150px]"
-            required
-          />
+           <RichTextEditor value={text} onChange={setText} />
+          <h2 className="mt-6 text-lg">Output:</h2>
+          <div className="border p-2 mt-2" dangerouslySetInnerHTML={{ __html: text }} />
         </div>
 
         {/* Submit Button (Bottom Right) */}
