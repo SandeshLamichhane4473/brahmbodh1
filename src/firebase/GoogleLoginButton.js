@@ -2,13 +2,13 @@ import React, {useEffect } from 'react';
 import { signInWithGoogle } from '../firebase/firebaseUtils';
  import { useNavigate } from 'react-router-dom';
  import GoogleButton from 'react-google-button'
- 
 import { useAuth } from '../context/AuthContext';
-import firebase from 'firebase/compat/app';
 import { useLocation } from 'react-router-dom';
+
+
 const GoogleLoginButton = () => {
    const location = useLocation();
-  console.log(location.pathname); 
+ 
 
 
   const navigate = useNavigate();
@@ -18,14 +18,14 @@ const GoogleLoginButton = () => {
    function redirect_url(){
     const isAdminRoute = location.pathname.includes("/admin/");
      const isUserRoute = location.pathname.includes("/user/");
-    if (user && user.role=="admin" && isAdminRoute) {
+    if (user && user.role==="admin" && isAdminRoute) {
       navigate('/admin/');
     }
-    if (user && user.role=="admin" && isUserRoute) {
+    if (user && user.role==="admin" && isUserRoute) {
       navigate('/');
     }
 
-    if (user && user.role=="user" && isUserRoute) {
+    if (user && user.role==="user" && isUserRoute) {
       navigate('/');
     }
    }
@@ -33,7 +33,7 @@ const GoogleLoginButton = () => {
     //if the user is already alogged in and has role admin
      redirect_url()
      
-  }, [user, navigate]);
+  }, [user, navigate,redirect_url]);
    
   const handleLogin = async () => {
     try {

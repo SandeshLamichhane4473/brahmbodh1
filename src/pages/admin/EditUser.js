@@ -8,7 +8,7 @@ const EditUser = () => {
   const { userId } = useParams(); // Get userId from URL
   const [editUser, seteditUser] = useState({});
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+ 
   const { user} = useAuth();
   const canUpdate = user?.authorization?.includes("U");
   // Simulated user fetch function (replace with real API call)
@@ -57,7 +57,7 @@ const EditUser = () => {
       return; 
       }
        
-     if(user.uid==editUser.uid){alert("Own id cannot be updated"); return;}
+     if(user.uid===editUser.uid){alert("Own id cannot be updated"); return;}
      if (canUpdate) {
      alert("❌ You are not authorized to perform this action.");
      return;

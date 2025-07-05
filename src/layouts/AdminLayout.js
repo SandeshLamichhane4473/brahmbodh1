@@ -17,7 +17,7 @@ const AdminLayout = () => {
  const handleLogout = () => {
   alert("are you sure ?")
   logout();
- // navigate('/admin/login');
+   navigate('/admin/login');
   setMobileOpen(false); // Close sidebar on mobile
 };
    /////////

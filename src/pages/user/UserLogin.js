@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import logo from '../../assets/logo.png'
@@ -7,27 +7,8 @@ import GoogleLoginButton from '../../firebase/GoogleLoginButton'
 const UserLogin = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = () => {
-    // Simulate validation (replace with real logic in future)
-    if (email && password) {
-      alert(email + password)
-      const userData = { name: email, role: 'admin' };
-      localStorage.setItem('user', JSON.stringify(userData)); // Persist login
-      login(userData);
-     
-    if (userData.role === 'user') {
-      navigate('/');
-    } else {
-      navigate('/admin/'); // Redirect to main page for non-admin users
-    }
-      
-    } else {
-      alert('Please enter both email and password');
-    }
-  };
+ 
+ 
    
 
   return (
