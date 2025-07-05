@@ -1,43 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+
 import { useNavigate } from "react-router-dom";
+import { db } from "../../firebase/config";
 // Sample user data
-const initialUsers = [
-  {
-    userId: 1,
-    username: "john_doe",
-    email: "john@example.com",
-    dateOfJoin: "2024-01-12",
-    role: "Admin",
-    authorization: "Full",
-    lastLogin: "2025-05-25",
-    loginAttempts: 1,
-    remarks: "Active user",
-  },
-  {
-    userId: 2,
-    username: "jane_smith",
-    email: "jane@example.com",
-    dateOfJoin: "2023-07-18",
-    role: "Editor",
-    authorization: "Limited",
-    lastLogin: "2025-05-28",
-    loginAttempts: 3,
-    remarks: "Locked out",
-  },
-  // Add more users as needed
-];
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // const [users, setUsers] = useState(initialUsers);
-
-  const [users] = useState(initialUsers);
+   const [users, setUsers] = useState([]);
 
   const navigate = useNavigate();
   const filteredUsers = users.filter((user) =>
-    user.username.toLowerCase().includes(searchTerm.toLowerCase())
+
+   user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const fetchUsers = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'users'));
+        const usersData = querySnapshot.docs.map(doc => doc.data());
+        console.log(usersData)
+        setUsers(usersData);
+      } catch (error) {
+         alert('Error fetching users:', error);
+         console.log(error)
+      }
+    };
+//useeffect
+useEffect(() => {
+    fetchUsers();
+  }, []);
+
 
   return (
     <div className="p-4">
@@ -56,7 +51,7 @@ const Users = () => {
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border rounded shadow">
           <thead className="bg-gray-100 text-sm text-left">
-            <tr>
+            <tr key="abc">
               <th className="p-2 border">User ID</th>
               <th className="p-2 border">Username</th>
               <th className="p-2 border">Email</th>
@@ -73,18 +68,18 @@ const Users = () => {
             {filteredUsers.length > 0 ? (
               filteredUsers.map((user) => (
                 <tr key={user.userId} className="text-sm hover:bg-gray-50">
-                  <td className="p-2 border">{user.userId}</td>
-                  <td className="p-2 border">{user.username}</td>
+                  <td className="p-2 border">{user.uid}</td>
+                  <td className="p-2 border">{user.name}</td>
                   <td className="p-2 border">{user.email}</td>
-                  <td className="p-2 border">{user.dateOfJoin}</td>
-                  <td className="p-2 border">{user.role}</td>
+                  <td className="p-2 border">{user.createdAt}</td>
+                  <td className="p-2 border">{user.role && user.role}</td>
                   <td className="p-2 border">{user.authorization}</td>
                   <td className="p-2 border">{user.lastLogin}</td>
                   <td className="p-2 border">{user.loginAttempts}</td>
                   <td className="p-2 border">{user.remarks}</td>
                   <td className="p-2 border">
                     <button
-                      onClick={() => navigate(`/admin/edituser/${user.userId}`)}
+                      onClick={() => navigate(`/admin/edituser/${user.uid}`)}
                       className="text-blue-600 hover:underline"
                     >
                       Edit
@@ -95,7 +90,7 @@ const Users = () => {
             ) : (
               <tr>
                 <td colSpan="9" className="p-4 text-center text-gray-500">
-                  No users found.
+                 
                 </td>
               </tr>
             )}

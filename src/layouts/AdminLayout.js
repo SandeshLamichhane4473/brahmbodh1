@@ -13,9 +13,11 @@ const AdminLayout = () => {
    const { logout } = useAuth();
     const navigate = useNavigate();
    //logout 
+  
  const handleLogout = () => {
+  alert("are you sure ?")
   logout();
-  navigate('/admin/login');
+ // navigate('/admin/login');
   setMobileOpen(false); // Close sidebar on mobile
 };
    /////////
@@ -27,8 +29,7 @@ const AdminLayout = () => {
     }`;
   const { title } = useAdminTitle();
 
-
-  
+   
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Topbar (mobile only) */}

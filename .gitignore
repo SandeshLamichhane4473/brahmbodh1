@@ -4,6 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
+#json secret
+
+# Ignore Firebase service account key
+src/secret/ 
 
 # testing
 /coverage

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-
 import logo from '../../assets/logo.png'
+import GoogleLoginButton from '../../firebase/GoogleLoginButton'
+
 const UserLogin = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -17,59 +18,63 @@ const UserLogin = () => {
       localStorage.setItem('user', JSON.stringify(userData)); // Persist login
       login(userData);
      
-    if (userData.role === 'admin') {
-      navigate('/home');
+    if (userData.role === 'user') {
+      navigate('/');
     } else {
-      navigate('/'); // Redirect to main page for non-admin users
+      navigate('/admin/'); // Redirect to main page for non-admin users
     }
       
     } else {
       alert('Please enter both email and password');
     }
   };
+   
 
   return (
    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-  <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-sm">
+  <div className="bg-white shadow-lg rounded-lg p-5 w-full max-w-sm">
     
     {/* Logo */}
     <div className="flex justify-center mb-6">
      <img
           src={logo}
           alt="Logo"
-          className="h-20 w-21 rounded-full object-cover"
+          className="h-[150px] w-[150px] rounded-full object-cover"
         />
 
     </div>
 
+ 
+
     {/* Title */}
-    <h2 className="text-2xl font-semibold text-center text-secondary mb-6">Login</h2>
+    <h2 className="text-2xl font-semibold text-center text-secondary mb-6">Normal User Login</h2>
+    <GoogleLoginButton />
 
     {/* Email Field */}
-    <input
+    {/* <input
       type="email"
       placeholder="Email"
       className="w-full mb-3 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
       value={email}
       onChange={(e) => setEmail(e.target.value)}
-    />
+    /> */}
 
     {/* Password Field */}
-    <input
+    {/* <input
       type="password"
       placeholder="Password"
       className="w-full mb-4 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
       value={password}
       onChange={(e) => setPassword(e.target.value)}
-    />
+    /> */}
 
     {/* Login Button */}
-    <button
+    {/* <button
       onClick={handleLogin}
       className="w-full px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition"
     >
       Login
-    </button>
+    </button> */}
   </div>
 </div>
 
