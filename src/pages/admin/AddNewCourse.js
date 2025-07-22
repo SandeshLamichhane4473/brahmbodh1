@@ -20,6 +20,7 @@ const AddNewCourse = () => {
     approve_status: "",
     subtitles: "",
   });
+  
 
    useEffect(() => {
     if (isEdit) {

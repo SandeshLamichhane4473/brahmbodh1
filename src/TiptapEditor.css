@@ -1,0 +1,13 @@
+.toolbar button {
+  background: #f0f0f0;
+  border: none;
+  padding: 6px 10px;
+  margin-right: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.toolbar button.active {
+  background-color: #333;
+  color: white;
+}

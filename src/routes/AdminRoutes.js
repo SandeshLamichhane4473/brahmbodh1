@@ -12,6 +12,7 @@ import AdminCourse from '../pages/admin/AdminCourse';
 import AddNewCourse from '../pages/admin/AddNewCourse';
 import EditUser from '../pages/admin/EditUser';
 import AddEditBlog from '../pages/admin/BlogAddEdit';
+import AddCategories from '../pages/admin/extra/AddCategories';
 const AdminRoutes = () => {
   return (
     <Routes>
@@ -39,6 +40,7 @@ const AdminRoutes = () => {
         <Route path="edituser/:userId" element={<EditUser />} />
          <Route path="addblog" element={<AddEditBlog />} />
          <Route path="editblog/:blogId" element={<AddEditBlog />} />
+         <Route path="addcat" element={<AddCategories />} />
          </Route>
     </Routes>
   );

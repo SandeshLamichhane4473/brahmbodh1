@@ -16,7 +16,7 @@ const UserRoutes = () => {
         <Route path="blog" element={<Blog />} />
         <Route  path="course" element={<Course />} />
         <Route path="about" element={<About />} />
-       <Route path="/course/:courseId/:subtitleId?" element={<ViewCourse />} />  
+        <Route path="/course/:courseId/:subtitleId?" element={<ViewCourse />} />  
        {/* :subtitleId? means it's optional,  */}
         {/* <Route path="faq" element={<FAQ />} />
         <Route path="yoga" element={<Yoga />} />

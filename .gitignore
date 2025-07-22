@@ -4,6 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
+#json secret
+
+# Ignore Firebase service account key
+src/secret/ 
 
 # testing
 /coverage
@@ -12,6 +16,7 @@
 /build
 
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local
