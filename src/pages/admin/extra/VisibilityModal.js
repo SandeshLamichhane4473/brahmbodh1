@@ -7,7 +7,7 @@ const VisibilityModal = ({ isOpen, onClose, blog, onUpdated }) => {
   const [updating, setUpdating] = useState(false);
   if (!isOpen || !blog) return null;
   const handleToggle = async () => {
-   if(blog.status=="U"){
+   if(blog.status==="U"){
     alert("Please check first.")
     return;
    }

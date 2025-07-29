@@ -1,5 +1,12 @@
-import { useState, useEffect } from "react";
-import { collection, query, orderBy, limit, startAfter, getDocs } from "firebase/firestore";
+import { useState, useEffect, useCallback } from "react";
+import {
+  collection,
+  query,
+  orderBy,
+  limit,
+  startAfter,
+  getDocs,
+} from "firebase/firestore";
 
 const usePaginatedQuery = ({
   db,
@@ -13,7 +20,8 @@ const usePaginatedQuery = ({
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
-  const loadInitial = async () => {
+  // ✅ Memoize loadInitial
+  const loadInitial = useCallback(async () => {
     setLoading(true);
     const q = query(
       collection(db, collectionName),
@@ -22,15 +30,19 @@ const usePaginatedQuery = ({
     );
 
     const snapshot = await getDocs(q);
-    const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const docs = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     setData(docs);
     setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
     setHasMore(snapshot.docs.length === pageSize);
     setLoading(false);
-  };
+  }, [collectionName, db, orderByField, pageSize]);
 
-  const loadMore = async () => {
+  // ✅ Memoize loadMore (optional, good for stability)
+  const loadMore = useCallback(async () => {
     if (!lastVisible || !hasMore) return;
     setLoading(true);
 
@@ -42,19 +54,29 @@ const usePaginatedQuery = ({
     );
 
     const snapshot = await getDocs(q);
-    const docs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const docs = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     setData((prev) => [...prev, ...docs]);
     setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
     setHasMore(snapshot.docs.length === pageSize);
     setLoading(false);
-  };
+  }, [collectionName, db, orderByField, pageSize, lastVisible, hasMore]);
 
+  // ✅ Include proper dependencies
   useEffect(() => {
     if (initialLoad) loadInitial();
-  }, [collectionName]);
+  }, [initialLoad, loadInitial]);
 
-  return { data, loading, loadMore, hasMore, reload: loadInitial };
+  return {
+    data,
+    loading,
+    loadMore,
+    hasMore,
+    reload: loadInitial,
+  };
 };
 
 export default usePaginatedQuery;

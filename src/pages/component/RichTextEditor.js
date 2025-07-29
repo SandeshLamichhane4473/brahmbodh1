@@ -6,22 +6,46 @@ const RichTextEditor = ({ value, onChange }) => {
 
   const config = {
     readonly: false,
-    height: 400,
+    height: 800,
     toolbarSticky: false,
     toolbarAdaptive: false,
-    buttons: [
-      'source', '|', 'bold', 'italic', 'underline', '|', 'ul', 'ol',
-      '|', 'outdent', 'indent', '|', 'font', 'fontsize', 'brush', 'paragraph',
-      '|', 'image', 'video', 'table', 'link', '|', 'align', 'undo', 'redo', '|', 'hr', 'eraser'
-    ],
+   buttons: [
+    'source', '|', 
+    'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', '|',
+    'ul', 'ol', 'indent', 'outdent', '|',
+    'font', 'fontsize', 'brush', 'paragraph', 'classSpan', '|',
+    'lineHeight', 'align', '|',
+    'image', 'video', 'table', 'link', 'file', '|',
+    'cut', 'copy', 'paste', '|',
+    'undo', 'redo', '|',
+    'hr', 'eraser', 'selectall', 'find', '|',
+    'print', 'fullsize', 'preview', 'about'
+  ],
     uploader: {
       insertImageAsBase64URI: true
-    }
+    },
+      style: {
+    lineHeight: '1.8',  // optional fallback
+  },
+
+   events: {
+  afterInit: (editor) => {
+    // Line height
+    editor.editor.style.lineHeight = '1.8';
+
+    // Padding inside the editor content
+    editor.editor.style.padding = '12px';
+
+    // Optional: margin or border
+    editor.editor.style.border = '1px solid #ccc';
+    editor.editor.style.borderRadius = '8px';
+  }
+}
   };
 
   return (
-    <div>
-      <h2>Jodit Rich Text Editor</h2>
+    
+     <div style={{ width: '100%', maxWidth: '100%', overflowX: 'auto' }}>
       <JoditEditor
         ref={editor}
         value={value}

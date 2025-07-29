@@ -1,48 +1,34 @@
+// import ShortInfo from "../component/ShortInfo";
+// import ExploreCourse from "../component/ExploreCourses";
+// import myimage from '../../assets/myphoto.png';
+// import PhotoGallery from "../component/PhotoGallary";
  
-import ShortInfo from "../component/ShortInfo";
-import ExploreCourse from "../component/ExploreCourses";
+import HomeSlogan from "../component/HomeSlogan";
+import HomeBlog from "../component/HomeBlog";
+import HomePhotos from "../component/HomePhotos";
  
-import myimage from '../../assets/myphoto.png'
-import PhotoGallery from "../component/PhotoGallary";
-import SocialLinks from "../component/SocialLinks";
+
+
 const Home = () => {
-   ;
-
+  
   return (
-     <div   className="bg-gray-100 min-h-screen">
+    <div className="bg-white min-h-screen ">
+      {/* Section 1: Hero Image */}
+      <HomeSlogan />
 
-      {/* maeque the text lates news */}
-     <section className="flex flex-col lg:flex-row w-full   py-1 gap-1  ">
-      <div className="lg:w-1/2 w-full flex  ">
-        <ShortInfo />
-      </div>
-        <div className="lg:w-1/2 w-full  flex  flex-col items-center justify-center text-secondary">
-      <img
-           src={myimage}
-           alt="Description"
-           className="w-[330px] h-[390px] object-cover  mx-auto rounded-full border-1 border-gray-1 shadow-lg"
-         />
-        <p className="mt-4 text-xl font-semibold  text-secondary text-center">
-        योग प्रशिक्षक, संदेश लामीछाने
-      </p>
+       {/* Section 4: Social Links */}
+      <HomeBlog />
 
-      <p className="mt-4 text-md font-normal text-gray-500 text-center">
-         
-         "ब्रह्म नै अन्तिम सत्य हो, अरु सबै क्षणीक मोह-माया हो"
-      </p>
+      {/* Section 2: Courses */}
+    
+     <HomePhotos />
+      {/* Section 3: Photo Gallery */}
+     
+   
+  {/* <ExploreCourse /> */}
+      {/* Section 4: Social Links */}
+      {/* <SocialLinks /> */}
     </div>
-    </section>
-
-
-    {/* section 2 contain courses */}
-     <ExploreCourse />
-
-    {/* section  3 contain  photo gallaery*/}
-    <PhotoGallery />
-
-    {/* Links for the  youtube  */}
-    <SocialLinks />
-     </div>
   );
 };
 

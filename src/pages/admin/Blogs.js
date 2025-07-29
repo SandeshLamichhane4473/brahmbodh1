@@ -1,80 +1,56 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getDocs } from "firebase/firestore";
-import { db } from "../../firebase/config"; 
-import usePaginatedQuery from "../../firebase/usePaginatedQuery";
+ 
 import { FaDownload } from "react-icons/fa";
 import BlogModal from "./extra/BlogModal";
 import VisibilityModal from "./extra/VisibilityModal";
-import { useCategories } from "./extra/useCategories";
-import { collection, where,query } from "firebase/firestore";
-import usePermission from "../hooks/permissionsConfig";
-
-const dummyBlogs = [
  
-  
-];
-
+import useLatestCategories  from "../hooks/useCategories";
+import useAllBlogAdmin from "../hooks/useAllBlogAdmin";
  
  
 
 const Blogs = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("All");
-  const [filteredBlogs, setFilteredBlogs] = useState(dummyBlogs);
+  
+ 
    const [showModal, setShowModal] = useState(false);
-  const [selectedBlogId, setSelectedBlogId] = useState(null);
+  
     const [selectedBlog, setSelectedBlog] = useState(null);
     const [showVisibilityModal, setShowVisibilityModal] = useState(false);
-    const [search_laoding, setSearch_Loading]=useState(false)
+   
     const [selectedCategory, setSelectedCategory]= useState("")
-    const usecategories = useCategories()
+     const[filteredBlogs,setFilteredBlogs]=useState(null)
 
-
+   const { categoriesList } = useLatestCategories();
+ const {
+   allBlogs,
+  loadingaLLBlogs,
+  loadMore,
+  hasMore
+} = useAllBlogAdmin(selectedCategory); 
  
 
   const handleConfirmClick = async (id) => {
     try {
-        const blog = filteredBlogs.find((b) => b.timestamp === id);
+        const blog = allBlogs.find((b) => b.timestamp === id);
        setSelectedBlog(blog);
         setShowModal(true);
     } catch (error) {
       console.error("Error fetching blog:", error);
+      alert(error)
     }
   };
 
  
-    const {
-    data: blogs,
-    loading,
-    loadMore,
-    hasMore,
-    reload,
-  } = usePaginatedQuery({
-    db,
-    collectionName: "blogs",
-    orderByField: "timestamp",
-    pageSize: 5,
-  });
+   useEffect(() => {
+  setFilteredBlogs(allBlogs);
+}, [allBlogs]);
 
-
-
-useEffect(() => {
- 
-  const filtered = blogs.filter((blog) => {
-    const nameMatch = blog.header?.toLowerCase().includes(searchTerm.toLowerCase());
-    const categoryMatch =
-      categoryFilter === "All" || blog.category === categoryFilter;
-    return nameMatch && categoryMatch;
-  });
-
-
-  setFilteredBlogs(filtered);
-}, [searchTerm, categoryFilter, blogs]);
 
   const handleDelete = (id) => {
-    alert(`Delete course with ID ${id}`);
+     
   };
 
   
@@ -86,40 +62,23 @@ useEffect(() => {
 
         // this one for updating the filtered update
 
-        const handleBlogUpdate = (updatedBlog) => {
-            setFilteredBlogs((prev) =>
-              prev.map((b) =>
-                b.timestamp === updatedBlog.timestamp ? updatedBlog : b
-              )
-            );
-            setSelectedBlog(updatedBlog); // also update modal
-          };
-
-
-  /// handle the category seaarch option
-
- async function handleCategorySearch(value){
-setSearch_Loading(true);
-    try {
-      const q = query(
-        collection(db, "blogs"),
-        where("category", "==", value)
-      );
-      const querySnapshot = await getDocs(q);
-      const categoryBlogs = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        timestamp: doc.timestamp,
-      }));
-      console.log(categoryBlogs);
-      setFilteredBlogs(categoryBlogs);
-
-    } catch (error) {
-      console.error("Error fetching category blogs:", error);
-    } finally {
-      setSearch_Loading(false);
+    const handleBlogUpdate = (updatedBlog) => {
+      try{
+        setFilteredBlogs((prev) =>
+          prev.map((b) =>
+            b.timestamp === updatedBlog.timestamp ? updatedBlog : b
+          )
+        );
+        setSelectedBlog(updatedBlog); // also update modal
+      }
+   
+    catch(e){
+      console.log(e); alert(e)
     }
   }
-   if (search_laoding) return <div className="text-center mt-10">Loading...</div>;
+ 
+ 
+   if (loadingaLLBlogs) return <div className="text-center mt-10">Loading...</div>;
   return (
     <div className="p-4 max-w-7xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Blogs List</h1>
@@ -135,31 +94,33 @@ setSearch_Loading(true);
           className="p-2 border rounded w-full md:w-1/2"
         />
  
-      <div className="flex">
-            {Object.keys(usecategories).length === 0 ? (
-          <p className="text-gray-400">No categories yet.</p>
-        ) : (
-          <select
-            name="category"
-             value={selectedCategory}
-             
-                  onChange={   (e)=>{
-                     setSelectedCategory(e.target.value)
-                     handleCategorySearch(e.target.value);
-                  } }
-                 className="border px-3 py-2 rounded w-full"
-          >
-              <option value="" disabled>
-                  Select a category  
-              </option>.
-            {Object.entries(usecategories).map(([key, value], idx) => (
-              <option key={key} value={key}>
-                {value+"///"+key}
-              </option>
-            ))}
-          </select>
-        )}
-        </div>
+    <div className="flex">
+  {!categoriesList || Object.keys(categoriesList).length === 0 ? (
+    <p className="text-gray-400">No categories yet.</p>
+  ) : (
+    <select
+      name="category"
+      value={selectedCategory}
+      onChange={(e) => {
+        setSelectedCategory(e.target.value);
+   
+      }}
+      className="border px-3 py-2 rounded w-full"
+    >
+      <option value="" disabled>
+        Select a category
+      </option>
+      {Object.entries(categoriesList)
+        // 🔥 filter out "home"
+        .map(([key, value]) => (
+          <option key={key} value={key}>
+            {value}
+          </option>
+        ))}
+    </select>
+  )}
+</div>
+
 
         {/* add new button  */}
         <div className="">
@@ -245,20 +206,21 @@ setSearch_Loading(true);
 
                      
                     <td className="p-2 border">{new Date(blog.timestamp).toLocaleDateString()}</td>
-                      <td className="p-2 border">{blog.status&&blog.status || "_"}</td>
+                      <td className="p-2 border">{blog.status || "_"}</td>
                         {/*  make trhe visiblity */}
                       <td
                         onClick={() => {
                          //check the permisiion first 
-                         
-
+                      
                           setSelectedBlog(blog);
                          
                           setShowVisibilityModal(true);
                         }}
                         className="p-2 border text-blue-600 cursor-pointer hover:underline"
                       >
-                        {blog.visible==="private"?"no":blog.visible || "—"}
+                       {!blog.visible ? "—" : blog.visible === "private" ? "No" : blog.visible}
+
+
                       </td>
 
 
@@ -306,7 +268,7 @@ setSearch_Loading(true);
            
            {/* For the Loading and filtered */}
 
-                            {loading && (
+                            {loadingaLLBlogs && (
                     <tr>
                       <td colSpan="13" className="text-center p-4 text-gray-500">
                         Loading...
@@ -314,7 +276,7 @@ setSearch_Loading(true);
                     </tr>
                   )}
 
-                  {!loading && filteredBlogs.length === 0 && (
+                  {!loadingaLLBlogs && allBlogs.length === 0 && (
                     <tr>
                       <td colSpan="13" className="text-center p-4 text-gray-500">
                         No blogs found.
@@ -339,13 +301,13 @@ setSearch_Loading(true);
 
       </div>
 
-                       <BlogModal         
-                            isOpen={showModal}
-                          onClose={() => setShowModal(false)}
-                          blog={selectedBlog}
-                          setBlog={setSelectedBlog}
-                           onBlogUpdate={handleBlogUpdate}
-                        />
+            <BlogModal         
+               isOpen={showModal}
+              onClose={() => setShowModal(false)}
+              blog={selectedBlog}
+              setBlog={setSelectedBlog}
+                onBlogUpdate={handleBlogUpdate}
+            />
 
             <VisibilityModal
             isOpen={showVisibilityModal}

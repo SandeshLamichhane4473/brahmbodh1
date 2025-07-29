@@ -1,18 +1,45 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { db } from "../../../firebase/config";
 import { updateDoc } from "firebase/firestore";
  import { doc } from "firebase/firestore";
 import { useAuth } from "../../../context/AuthContext";
-
-
+ 
 const BlogModal = ({ isOpen, onClose, blog, setBlog ,onBlogUpdate}) => {
+const [bodyHtml, setBodyHtml] = useState("");
 
     const [updating, setUpdating] = useState(false);
-      const { user} = useAuth();
+  const { user} = useAuth();
+
+
+
+const fetchBodyHTML = async (url) => {
+  try {
+    const res = await fetch(url);
+     
+    if (!res.ok) throw new Error("Failed to fetch body HTML");
+    return await res.text();
+  } catch (error) {
+     
+    alert("Error fetching HTML body:", error);
+    return "";
+  }
+};
+
+
+useEffect(() => {
+  const loadBody = async () => {
+    if (!blog?.body_url) return;
+    const html = await fetchBodyHTML(blog.body_url);
+    setBodyHtml(html);
+  };
+
+  loadBody();
+}, [blog?.body_url]);
 
 
   if (!isOpen) return null;
+
 
 
   const handleConfirm = async () => {
@@ -39,6 +66,7 @@ const BlogModal = ({ isOpen, onClose, blog, setBlog ,onBlogUpdate}) => {
   
     } catch (err) {
         alert(err)
+        console.log(err)
     } finally {
       setUpdating(false);
     }
@@ -73,14 +101,11 @@ const BlogModal = ({ isOpen, onClose, blog, setBlog ,onBlogUpdate}) => {
 
             <div>
               <strong>Body Content:</strong>
-              <div className="w-full h-[400px] mt-2 border rounded overflow-hidden">
-                <iframe
-                  src={blog.body_url}
-                  title="Blog Body"
-                  className="w-full h-full"
-                  frameBorder="0"
-                />
-              </div>
+              {/* <div className="w-full h-[400px] mt-2 border rounded overflow-hidden"> */}
+               {/* <div className="w-full min-h-[400px] mt-2 border rounded p-4 overflow-auto bg-gray-50"> */}
+                  <div dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+                {/* </div>
+              </div> */}
             </div>
           </div>
         ) : (

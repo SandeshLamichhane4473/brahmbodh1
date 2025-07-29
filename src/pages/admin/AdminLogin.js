@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import React from 'react';
+ 
 import logo from '../../assets/logo.png'
 import GoogleLoginButton from '../../firebase/GoogleLoginButton'
 
 const AdminLogin = () => {
-  const { login } = useAuth();
-  const navigate = useNavigate();
-  
- 
+    
 
   return (
    <div className="min-h-screen flex items-center justify-center bg-gray-100">

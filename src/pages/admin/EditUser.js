@@ -1,5 +1,5 @@
 import React, { useEffect, useState, } from "react";
-import { useNavigate,useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { db } from "../../firebase/config";
 import { doc,getDoc,setDoc } from "firebase/firestore";
 import { NavLink } from "react-router-dom";
@@ -9,7 +9,16 @@ import { useAuth } from '../../context/AuthContext';
 
 const EditUser = () => {
   const { userId } = useParams(); // Get userId from URL
-  const [editUser, seteditUser] = useState({});
+  const [editUser, seteditUser] = useState({
+  name: "",
+  email: "",
+  uid: "",
+  photoURL: "",
+  createdAt: "",
+  role: "user",
+  authorization: "N",
+});
+
   const [loading, setLoading] = useState(true);
  
   const { user} = useAuth();
@@ -63,7 +72,7 @@ const EditUser = () => {
       }
        
      if(user.uid===editUser.uid){alert("Own id cannot be updated"); return;}
-     if (canUpdate) {
+     if (!canUpdate) {
      alert("❌ You are not authorized to perform this action.");
      return;
       }

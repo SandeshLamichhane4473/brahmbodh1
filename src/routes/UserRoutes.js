@@ -7,6 +7,7 @@ import About from '../pages/user/About';
 import Home from '../pages/user/Home';
 import Course from '../pages/user/Course';
 import ViewCourse from '../pages/user/ViewCourse';
+import ViewBlog from '../pages/user/ReadBlog';
 const UserRoutes = () => {
   return (
     <Routes>
@@ -17,6 +18,8 @@ const UserRoutes = () => {
         <Route  path="course" element={<Course />} />
         <Route path="about" element={<About />} />
         <Route path="/course/:courseId/:subtitleId?" element={<ViewCourse />} />  
+        <Route path="/readblog/:id/*" element={<ViewBlog />} />
+
        {/* :subtitleId? means it's optional,  */}
         {/* <Route path="faq" element={<FAQ />} />
         <Route path="yoga" element={<Yoga />} />

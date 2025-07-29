@@ -1,7 +1,7 @@
 // src/extra/AddCategories.js
 
-import React, { useEffect, useState } from 'react';
-import { collection, setDoc, addDoc, updateDoc, deleteDoc, doc ,getDoc} from 'firebase/firestore';
+import React, { useEffect, useState,  useCallback } from 'react';
+import {  setDoc, updateDoc,  doc ,getDoc} from 'firebase/firestore';
 import { deleteField } from 'firebase/firestore';
  
 import { Pencil, Trash2 } from 'lucide-react';
@@ -10,27 +10,27 @@ import { db } from '../../../firebase/config';
 const AddCategories = () => {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState('');
-  const [editingId, setEditingId] = useState(null);
+//  const [editingId, setEditingId] = useState(null);
  const [loading, setLoading] = useState(false);
  const [editingKey, setEditingKey] = useState(null);
-  const categoriesRef = collection(db, 'categories');
-  const CATEGORY_DOC_PATH = 'categories/list';
+   const CATEGORY_DOC_PATH = 'categories/list';
    const categoryRef = doc(db, CATEGORY_DOC_PATH);
 
+const fetchCategories = useCallback(async () => {
+  const snap = await getDoc(categoryRef);
+  if (snap.exists()) {
+    setCategories(snap.data());
+  } else {
+    setCategories({});
+  }
+}, [categoryRef]);
 
-   const fetchCategories = async () => {
-    const snap = await getDoc(categoryRef);
-    if (snap.exists()) {
-      setCategories(snap.data());
-    } else {
-      setCategories({});
-    }
-  };
+
 
   useEffect(() => {
-    fetchCategories();
-    
-  }, []);
+  fetchCategories();
+}, [fetchCategories]);
+
 
 
    const handleAdd= async () => {
@@ -56,15 +56,19 @@ const AddCategories = () => {
 
   const handleUpdateCategory = async (id) => {
     try{
+      setLoading(true)
     const name = newCategory.trim();
     if (!name) return alert('Enter a valid name to update');
     await updateDoc(doc(db, 'categories', 'list'), { [id]:name });
-    setEditingId(null);
+  //  setEditingId(null);
     setEditingKey(null)
     setNewCategory('');
     fetchCategories();
        }catch(e){
         alert(e)
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -72,7 +76,7 @@ const AddCategories = () => {
      
     setEditingKey(key)
     setNewCategory(value);
-    setEditingId(key);
+    //setEditingId(key);
   };
 
   const handleDelete = async (id) => {
@@ -104,6 +108,7 @@ const AddCategories = () => {
           placeholder="Enter category name"
           className="flex-1 border px-3 py-2 rounded"
         />
+        
         {editingKey}
         <button
           onClick= { editingKey ? ()=>handleUpdateCategory(editingKey) : handleAdd}

@@ -21,7 +21,7 @@ const Users = () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'users'));
         const usersData = querySnapshot.docs.map(doc => doc.data());
-        console.log(usersData)
+        
         setUsers(usersData);
       } catch (error) {
          alert('Error fetching users:', error);
@@ -67,7 +67,7 @@ useEffect(() => {
           <tbody>
             {filteredUsers.length > 0 ? (
               filteredUsers.map((user) => (
-                <tr key={user.userId} className="text-sm hover:bg-gray-50">
+                <tr key={user.uid} className="text-sm hover:bg-gray-50">
                   <td className="p-2 border">{user.uid}</td>
                   <td className="p-2 border">{user.name}</td>
                   <td className="p-2 border">{user.email}</td>
