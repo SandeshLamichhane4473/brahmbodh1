@@ -26,7 +26,7 @@ const HomeSlogan = () => {
       </h2>
 
       {/* Title */}
-      <p className="text-sm text-gray-600">वेदान्त विचारक</p>
+      <p className="text-sm text-gray-600">वेदान्त प्रेमी</p>
     </div>
   </div>
  
