@@ -30,7 +30,7 @@ const Dashboard = () => {
           <span>Welcome, <strong>{user.name}</strong></span><br/>
            <span> <strong>{ user.email}</strong></span> <br />
             <span> <strong>{user.role}</strong></span><br/>
-           <span>  <strong>{user.authorization}</strong></span>
+           <span>  <strong>&{user.authorization}</strong></span>
            
         </div>
       ) : 
