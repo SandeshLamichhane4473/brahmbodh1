@@ -10,7 +10,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 
-const BATCH_SIZE = 1;
+const BATCH_SIZE = 10;
 
 const useAllBlogAdmin = (categoryFilter = null) => {
   const [allBlogs, setAllBlogs] = useState([]);

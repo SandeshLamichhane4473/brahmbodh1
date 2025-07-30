@@ -2,7 +2,7 @@
 const admin = require('firebase-admin');
 
 // Path to your Firebase service account JSON
-const serviceAccount = require('../secret/serviceAccountKey.json');
+const serviceAccount = require('../../secret/serviceAccountKey1.json');
  
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -14,8 +14,10 @@ admin.initializeApp({
 // List of UIDs to be made admins
 const adminUIDs = [
   '9WkEdfkC6IYtJObO334OXeANA172',
-  'Flfs9aQit3MiYrMkFabz1CeztyE3',
-  'Flfs9aQit3MiYrMkFabz1CeztyE3'
+
+ 
+  'YTjtPaH1Y0WtgmSfrDhCqMHRSB22'
+ 
 ];
 
 async function setAdminClaims() {
@@ -24,6 +26,7 @@ async function setAdminClaims() {
       await admin.auth().setCustomUserClaims(uid, { admin: true });
       console.log(`✅ Set admin for UID: ${uid}`);
     } catch (err) {
+    
       console.error(`❌ Failed for UID ${uid}:`, err);
     }
   }

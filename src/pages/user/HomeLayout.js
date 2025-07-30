@@ -218,7 +218,7 @@ const navigate = useNavigate();
         </>
       ) : (
         <NavLink
-          to="/login"
+          to="user/login"
           onClick={() => setShowUserMenu(false)}
           className="block px-4 py-2 hover:bg-gray-100"
         >
