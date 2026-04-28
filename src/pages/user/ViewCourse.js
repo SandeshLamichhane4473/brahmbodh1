@@ -1,6 +1,6 @@
 import { useParams,useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-
+//TOPIC id (advait-2), subtopic(yam 2.1), nestedubtopic(2.1.1),
 const courseDetails = {
   1: {
     title: "Web Development",
