@@ -8,6 +8,7 @@ import Home from '../pages/user/Home';
 import Course from '../pages/user/Course';
 import ViewCourse from '../pages/user/ViewCourse';
 import ViewBlog from '../pages/user/ReadBlog';
+import CourseDetail from '../pages/component/courses/CourseDetail';
 const UserRoutes = () => {
   return (
     <Routes>
@@ -19,6 +20,9 @@ const UserRoutes = () => {
         <Route path="about" element={<About />} />
         <Route path="/course/:courseId/:subtitleId?" element={<ViewCourse />} />  
         <Route path="/readblog/:id/*" element={<ViewBlog />} />
+          {/* <Route path="/coursedetail/:id/*" element={<CourseDetail />} /> */}
+          <Route path="/coursedetail/:id/:topicId?/:slug?" element={<CourseDetail />} />
+
 
        {/* :subtitleId? means it's optional,  */}
         {/* <Route path="faq" element={<FAQ />} />

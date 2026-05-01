@@ -13,6 +13,10 @@ import AddNewCourse from '../pages/admin/AddNewCourse';
 import EditUser from '../pages/admin/EditUser';
 import AddEditBlog from '../pages/admin/BlogAddEdit';
 import AddCategories from '../pages/admin/extra/AddCategories';
+import AdminCourseHeading from '../pages/admin/course/AdminCourseHeading';
+import AdminCourseContent from '../pages/admin/course/AdminCourseContent';
+import EditAddCourseContent from '../pages/admin/course/EditAddCourseContent';
+import JoinRequests from '../pages/admin/JoinRequest/Joinrequests';
 const AdminRoutes = () => {
   return (
     <Routes>
@@ -41,6 +45,10 @@ const AdminRoutes = () => {
          <Route path="addblog" element={<AddEditBlog />} />
          <Route path="editblog/:blogId" element={<AddEditBlog />} />
          <Route path="addcat" element={<AddCategories />} />
+         <Route path="courseheading" element={<AdminCourseHeading />} />
+          <Route path="coursecontent" element={<AdminCourseContent />} />
+          <Route path="editcoursecontent" element={<EditAddCourseContent />} />
+          <Route path="join_request" element={<JoinRequests />} />
          </Route>
     </Routes>
   );

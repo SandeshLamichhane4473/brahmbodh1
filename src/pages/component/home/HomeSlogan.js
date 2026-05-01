@@ -1,5 +1,6 @@
- import owner from '../../assets/myphoto.png';
-import slogan from '../../assets/slogan.png'
+ import owner from '../../../assets/myphoto.png';
+import slogan from '../../../assets/slogan.png'
+
 const HomeSlogan = () => {
   return (
     <div className="w-full flex flex-col md:flex-row items-center justify-between px-4 md:px-20 py-10 ">

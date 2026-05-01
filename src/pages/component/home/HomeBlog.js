@@ -1,6 +1,6 @@
 import React , {useState, useEffect}from 'react';
-import useLatestHomeBlog from '../hooks/useLatestHomeBlog';
- import { fetchBlogBody } from './fetchBlogBody';
+import useLatestHomeBlog from '../../hooks/useLatestHomeBlog';
+ import { fetchBlogBody } from '../fetchBlogBody';
 
 
 
@@ -17,10 +17,12 @@ const HomeBlog = () => {
 
 
   return (<>
-        <div
-          className="prose max-w-none"
-          dangerouslySetInnerHTML={{ __html: htmlContent }}
-        />
+       <div style={{ fontFamily: 'your-font-name, serif' }}>
+          <div
+            className="prose max-w-none px-6 py-8 sm:px-10 sm:py-10 text-lg sm:text-xl leading-relaxed text-neutral-800"
+            dangerouslySetInnerHTML={{ __html: htmlContent }}
+          />
+        </div>
        </>
   );
 };

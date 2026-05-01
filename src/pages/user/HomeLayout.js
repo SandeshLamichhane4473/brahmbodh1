@@ -61,7 +61,7 @@ const navigate = useNavigate();
 
         {/* Desktop Nav */}
         <nav className="space-x-4 items-center hidden md:flex relative">
-          {navLinks.map((link) =>
+          {navLinks.map((link,index) =>
             link.label === 'Courses' ? (<></>
               // <div key={link.to} className="relative inline-block">
               //   <button
@@ -91,7 +91,7 @@ const navigate = useNavigate();
               //   )}
               // </div>
             ) : (
-              <NavLink key={link.to} to={link.to} className={navLinkClass}>
+              <NavLink key={index} to={link.to} className={navLinkClass}>
                 {link.label}
               </NavLink>
             )

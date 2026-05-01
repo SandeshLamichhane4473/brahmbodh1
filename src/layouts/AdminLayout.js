@@ -112,13 +112,24 @@ const AdminLayout = () => {
           </NavLink>
 
 
-         <NavLink
-            to="/admin/course"
+
+          {/* Course heading title  */}
+           <NavLink
+            to="/admin/courseheading"
             className={navItemStyle}
             onClick={() => setMobileOpen(false)}
           >
             <FaBaby />
-            {!collapsed && <span>Course</span>}
+            {!collapsed && <span>Course Header</span>}
+          </NavLink>
+
+         <NavLink
+            to="/admin/coursecontent"
+            className={navItemStyle}
+            onClick={() => setMobileOpen(false)}
+          >
+            <FaBaby />
+            {!collapsed && <span>Course Content</span>}
           </NavLink>
           
 
@@ -126,12 +137,12 @@ const AdminLayout = () => {
 
 
           <NavLink
-             to="/admin/settings"
+             to="/admin/join_request"
             className={navItemStyle}
             onClick={() => setMobileOpen(false)}
           >
             <FaCog />
-            {!collapsed && <span>Settings</span>}
+            {!collapsed && <span>Join Request</span>}
           </NavLink>
 
             <hr className="my-2 border-gray-600" />
