@@ -145,6 +145,17 @@ const AdminLayout = () => {
             {!collapsed && <span>Join Request</span>}
           </NavLink>
 
+
+          
+          <NavLink
+             to="/admin/tarrot_request"
+            className={navItemStyle}
+            onClick={() => setMobileOpen(false)}
+          >
+            <FaCog />
+            {!collapsed && <span>Tarot Request</span>}
+          </NavLink>
+
             <hr className="my-2 border-gray-600" />
             <button
               onClick={handleLogout}

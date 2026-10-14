@@ -9,6 +9,7 @@ import Course from '../pages/user/Course';
 import ViewCourse from '../pages/user/ViewCourse';
 import ViewBlog from '../pages/user/ReadBlog';
 import CourseDetail from '../pages/component/courses/CourseDetail';
+import Tarrot from '../pages/user/Tarrot';
 const UserRoutes = () => {
   return (
     <Routes>
@@ -18,6 +19,7 @@ const UserRoutes = () => {
         <Route path="blog" element={<Blog />} />
         <Route  path="course" element={<Course />} />
         <Route path="about" element={<About />} />
+        <Route path="tarrot" element={<Tarrot />} />
         <Route path="/course/:courseId/:subtitleId?" element={<ViewCourse />} />  
         <Route path="/readblog/:id/*" element={<ViewBlog />} />
           {/* <Route path="/coursedetail/:id/*" element={<CourseDetail />} /> */}

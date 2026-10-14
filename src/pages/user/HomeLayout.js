@@ -7,6 +7,7 @@ const navLinks = [
   { to: '/blog', label: 'Blog' },
   { to: '/courses', label: 'Courses' },
   { to: '/about', label: 'About Us' },
+  { to: '/tarrot', label: 'Tarot' },
 ];
 
 // const courseList = [
@@ -45,9 +46,9 @@ const navigate = useNavigate();
     <div className="min-h-screen flex flex-col relative">
       {/* Header */}
       <header className="bg-primary text-white shadow-lg px-6 py-4 flex justify-between items-center relative z-50">
- <div  onClick={() => navigate('/')}   className="text-3xl cursor-pointer font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-100 drop-shadow-md tracking-wide font-[Noto Sans Devanagari]">
-  ब्रह्म-बोध
-</div>
+        <div  onClick={() => navigate('/')}   className="text-3xl cursor-pointer font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-100 drop-shadow-md tracking-wide font-[Noto Sans Devanagari]">
+          ब्रह्म-बोध
+        </div>
 
 
         {/* Hamburger Icon (Mobile) */}

@@ -17,6 +17,7 @@ import AdminCourseHeading from '../pages/admin/course/AdminCourseHeading';
 import AdminCourseContent from '../pages/admin/course/AdminCourseContent';
 import EditAddCourseContent from '../pages/admin/course/EditAddCourseContent';
 import JoinRequests from '../pages/admin/JoinRequest/Joinrequests';
+import TarotRequests from '../pages/admin/tarrot/TarrotRequests';
 const AdminRoutes = () => {
   return (
     <Routes>
@@ -49,6 +50,7 @@ const AdminRoutes = () => {
           <Route path="coursecontent" element={<AdminCourseContent />} />
           <Route path="editcoursecontent" element={<EditAddCourseContent />} />
           <Route path="join_request" element={<JoinRequests />} />
+          <Route path="tarrot_request" element={<TarotRequests />} />
          </Route>
     </Routes>
   );

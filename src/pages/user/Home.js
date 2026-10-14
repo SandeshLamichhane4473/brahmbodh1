@@ -10,6 +10,7 @@ import HomeSlogan from "../component/home/HomeSlogan";
 import CoursesGrid from "../component/home/CoursesGrid";
 import JoinModal from "../component/home/Joinmodal";
 
+
 const Home = () => {
   
   return (
